@@ -15,7 +15,7 @@ from .models import Post, Profile
 #User view
 def register_view(request):
     if request.user.is_authenticated:
-        return redirect("greeter:mainpage")
+        return redirect("home-base")
 
     context = {
         "register_form" : RegistrationForm
