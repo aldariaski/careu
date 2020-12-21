@@ -1,0 +1,102 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+
+<body>
+    <section class="gile fullscreen align-left">
+        <div class="spotlight fullscreen align-left">
+            <div dir="rtl" class="flex">
+                <img class="image1" src="{% static 'careu/asset.png' %}" alt="header" />
+                <div dir="ltr" class="info">
+                    <h1 class="heading">Making Your <br>World Better!</h1>
+                    <br>
+                    <p class="subheading">Hi {{username}}! We are providing information related to symptoms of bad mental health such as stress, insomnia, bipolar disorder and others</p>
+                    <br>
+                    <a href="{{ journal }}">
+                        <div id="container">
+                            <button class="learn-more">
+                    <span class="circle" aria-hidden="true">
+                      <span class="icon arrow"></span>
+                    </span>
+                    <span class="button-text">Get Started</span>
+                  </button>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="quotes">
+                <h3 style="font-size: 12px;text-align: center;display: inline-block;">“There’s nothing that can stop this man”</h3>
+                <h3 style="font-size: 16px;font-weight: bold;display: block;">Adam Levine</h3>
+            </div>
+            <br>
+            <div>
+                <h2 class="causes">Causes Of Bad Mental Health</h2>
+                <br><br>
+                <div class="flex-card">
+                    {% for instance in data %}
+                    <button onclick="myFunction('{{ instance.name }}','{{ instance.image }}', '{{ instance.symptom }}' ,'{{ instance.desctom }}')" style="color: white;background-color: white;" type="button" class="card-home" data-toggle="modal" data-target="#exampleModal"> 
+                    <div id="list-image">
+                        <img alt="{{ instance.image }}" style="width: 80%;height: 80%;" src= "/static/{{ instance.image }}" />
+                    </div>
+                        
+                        <p class="title">{{ instance.name }}</p> 
+                        <p class="desc">{{ instance.desc }}</p> 
+                        <br> 
+                </button> {% endfor %}
+                </div>
+            </div>
+            <br>
+            <div dir="ltr" class="flex">
+                <img style="margin-left: 5%;" class="image1" src="{% static 'careu/feature.png' %}" alt="header" />
+                <br><br>
+                <div dir="ltr" class="info">
+                    <p style="margin-left: 10%;text-align: center;" class="subheading">Our Feature</p>
+                    <h1 style="margin-left: 10%;text-align: center;" class="heading">Quarantine Journal!</h1>
+                    <br>
+                    <p style="margin-left: 10%;text-align: center;" class="subheading">Create your own journal</p>
+                    <br>
+                </div>
+            </div>
+            <br>
+            <div dir="rtl" class="content">
+                <img style="align-self: center;justify-self: center;" class="image1" src="{% static 'careu/statistic.png' %}" alt="header" /><br><br>
+                <div dir="ltr" class="info">
+                    <img style="height: 50%;width: 50%;" class="image1" src="{% static 'careu/percent.png' %}" alt="header" />
+                    <h1 style="color: white;" class="heading">Statistic</h1>
+                    <br>
+                    <p style="color: white;" class="subheading">65 percent of people report feeling extreme stress</p>
+                    <br>
+                </div>
+
+            </div>
+            <div class="elfsight-app-76961028-682a-4f23-9067-958aa6a81c45"></div>
+
+        </div>
+
+    </section>
+
+    <div style="background-color: transparent;box-shadow: none;" class="modal fade" id="exampleModal" tabindex="0" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="false">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="exampleModalLongTitle">Modal title</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+                </div>
+                <div class="modal-body" style="text-align: center;">
+                    <div id="gambar" style="align-items: center;justify-items: center;"></div>
+                    <h2 class="modal-title" id="symptoms">Modal title</h2>
+                    <div id="desctom"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</body>
+<footer></footer>
+{% endblock content %}

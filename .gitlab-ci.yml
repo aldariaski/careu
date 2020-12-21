@@ -1,0 +1,48 @@
+image: python:latest
+
+stages:
+  - static analysis
+  - test
+  - deploy
+ 
+before_script:
+  - python --version
+  - python -m pip install --upgrade pip
+  # - pip install pylint
+  # - pip install pytest
+  # - pip install dj-database-url
+  - pip install -r requirements.txt
+
+pylint:
+  stage: static analysis
+  script:
+    - pylint -d C0301 careu/*.py
+  allow_failure: true
+  coverage: '/^TOTAL.+?(\d+\%)$/'
+
+unit-test: 
+  stage: test
+  script:  
+    - python -m pip install Django 
+    - python manage.py test 
+
+coverage:
+  stage: test
+  script:
+    - python -m pip install coverage
+    - coverage run --include='careu/*' manage.py test
+    - coverage report -m
+
+Deployment:
+  image: ruby:2.4
+  stage: deploy
+  before_script:
+    - gem install dpl
+    - wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
+  script:
+    - dpl --provider=heroku --app=$HEROKU_APPNAME --api-key=$HEROKU_APIKEY
+    - export HEROKU_API_KEY=$HEROKU_APIKEY
+    - heroku run --app $HEROKU_APPNAME python manage.py migrate
+  environment:
+    name: production
+    url: $HEROKU_APP_HOST

@@ -1,0 +1,39 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+
+<body>
+    <section class="gile fullscreen align-left">
+        <div class="spotlight fullscreen align-left">
+            <div dir="rtl" class="flex">
+                <img class="image1" src="{% static 'careu/asset.png' %}" />
+                <div dir="ltr" class="info">
+                    <h1>Making Your <br>World Better!</h1><br>
+                    <h2>Login</h2>
+                    <br>
+
+                    <div id="container" class="text-light">
+                        <form method="POST" action="{% url 'login_view' %}" class="login-form bg-dark rounded-lg d-flex flex-column justify-content-center p-4">
+                            {% if error %}
+                            <p class="text-center p-2 bg-danger rounded-lg">{{error}}</p>
+                            {% endif %}
+                            <h3 class="mb-3 text-center text-light">Login here!</h3>
+                            {% csrf_token %} {{login_form}}
+                            <button id="btn_login" type="submit" class="btn btn-secondary mb-3">Login</button>
+                            <p>Don't have an account? <a href="{% url 'register_view' %}">Register here</a></p>
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="quotes">
+                <h3 style="font-size: 12px;text-align: center;display: inline-block;">“There’s nothing that can stop this man”</h3>
+                <h3 style="font-size: 16px;font-weight: bold;display: block;">Adam Levine</h3>
+            </div>
+            <br>
+
+
+    </section>
+
+</body>
+{% endblock content %}
