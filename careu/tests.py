@@ -26,8 +26,6 @@ class UserTest(TestCase):
         # an AnonymousUser instance.
         request.user = AnonymousUser()
 
-        # Test my_view() as if it were deployed at /customer/details
-        response = views(request)
-        # Use this syntax for class-based views.
-        response = views.as_view()(request)
+        # Test my_view()
+        response = self.client.get(reverse('careu:home'))
         self.assertEqual(response.status_code, 200)
