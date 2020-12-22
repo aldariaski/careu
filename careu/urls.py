@@ -6,7 +6,7 @@ from .views import (
     PostCreateView
 )
 
-app_name = "careu"
+#app_name = "careu"
 
 
 urlpatterns = [
