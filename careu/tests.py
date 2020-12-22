@@ -29,5 +29,5 @@ class UserTest(TestCase):
         request.user = AnonymousUser()
 
         # Test my_view()
-        response = self.client.get(reverse('careu:home'))
+        response = self.client.get(reverse('careu:home-base'))
         self.assertEqual(response.status_code, 200)
