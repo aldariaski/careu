@@ -15,7 +15,7 @@ from .models import Post, Profile
 #User view
 def register_view(request):
     if request.user.is_authenticated:
-        return redirect("careu:home-base")
+        return redirect("")
 
     context = {
         "register_form" : RegistrationForm
@@ -45,7 +45,7 @@ def register_view(request):
 def logout_view(request):
     if request.user.is_authenticated:
         logout(request)
-    return redirect("careu:home-base")
+    return redirect("")
 
 def login_view(request):
     context = {
@@ -53,7 +53,7 @@ def login_view(request):
     }
 
     if request.user.is_authenticated:
-        return redirect("careu:home-base")
+        return redirect("")
 
     if request.method == "POST":
         login_form = LoginForm(data = request.POST)
