@@ -3,9 +3,11 @@
 # Create your tests here.
 
 from django.contrib.auth.models import AnonymousUser, User
-from django.test import RequestFactory, TestCase
+from django.test import RequestFactory, TestCase, LiveServerTestCase, tag, Client
+from django.urls import reverse
 
-from .views import views
+
+#from .views import views
 
 class UserTest(TestCase):
     def setUp(self):
