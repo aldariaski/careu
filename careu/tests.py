@@ -44,5 +44,5 @@ class UserTest(TestCase):
         response = self.client.get(reverse('chat-base'))
         self.assertEqual(response.status_code, 200)
 
-        response = self.client.get(reverse('journal-detail'))
+        response = self.client.get(reverse('journal-create'))
         self.assertEqual(response.status_code, 200)
