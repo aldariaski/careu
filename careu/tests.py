@@ -31,3 +31,18 @@ class UserTest(TestCase):
         # Test my_view()#
         response = self.client.get(reverse('team-base'))
         self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(reverse('home-base'))
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(reverse('journal-home'))
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(reverse('logout_view'))
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(reverse('chat-base'))
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(reverse('journal-detail'))
+        self.assertEqual(response.status_code, 200)
