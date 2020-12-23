@@ -21,7 +21,7 @@ def team(request):
     '''team careu'''
     data1 = CareUTeam("M. Fauzi Ridwan", 1906351070, "https://www.linkedin.com/in/muhamad-fauzi-ridwan-199260172/", "careu/fauzi.png")
     data2 = CareUTeam("Kirene Naomi", 1906353473, "", "-")
-    data3 = CareUTeam("Yusuf Fakhri", 1906351096, "https://www.linkedin.com/in/ysfakhrialdrian/", "-")
+    data3 = CareUTeam("Yusuf Fakhri", 1906351096, "https://www.linkedin.com/in/ysfakhrialdrian/", "careu/yusuf.fakhri.jpg")
     data4 = CareUTeam("Jesika Avonia", 1906398686, "", "-")
     data = [data1,data2,data3,data4]
     context = {
