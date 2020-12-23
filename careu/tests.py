@@ -28,6 +28,6 @@ class UserTest(TestCase):
         # an AnonymousUser instance.
         request.user = AnonymousUser()
 
-        # Test my_view()
+        # Test my_view()#
         response = self.client.get(reverse('team-base'))
         self.assertEqual(response.status_code, 200)
