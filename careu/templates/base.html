@@ -63,9 +63,7 @@
                     <div class="navbar-nav mr">
                         {% if not request.user.is_authenticated %}
                         <a class="nav-item nav-link {% if request.path == login %} active {% endif %}" href="{{ login }}">Login</a> {% endif %} {% if request.user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link text-light" href="/profile/{{user.username}}">{{user.username}}</a>
-                        </li>
+                        <a class="nav-item nav-link" href="/profile/{{user.username}}">{{user.username}}</a> {% endif %}
                         <a class="nav-item nav-link {% if request.path == logout %} active {% endif %}" href="{{ logout }}">Logout</a> {% endif %}
                     </div>
                 </div>
