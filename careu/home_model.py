@@ -8,27 +8,6 @@ class BadMentalHealth:
         self.symptom = symptom
         self.desctom = desctom
 
-    def __str__(self):
-        return "${self.name}"
-
-    def validate_desc(self):
-        '''validate desciption'''
-        #:v dummy
-        return len(self.desc) > 5
-
-class Symptom:
-    '''Model for symptoms'''
-    def __init__(self, name, desc):
-        self.name = name
-        self.desc = desc
-
-    def __str__(self):
-        return "${self.name}"
-
-    def validate_name(self):
-        '''validate name'''
-        return len(self.name) > 5
-
 class Symptoms: # pylint: disable=too-few-public-methods
     '''List of Symptom'''
     bipolar_name1 = 'Bipolar I disorder'
@@ -51,10 +30,3 @@ class CareUTeam:
         self.npm = npm
         self.url = url
         self.image = image
-
-    def __str__(self):
-        return "${self.name} ${self.npm}"
-
-    def validate_name(self):
-        '''validate name'''
-        return len(self.name) > 5

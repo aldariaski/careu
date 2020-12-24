@@ -1,86 +1,65 @@
-from django.contrib.auth import get_user_model
-from channels.generic.websocket import AsyncWebsocketConsumer, WebsocketConsumer
+import asyncio
 import json
-from .models import Message, Chat, Contact
-from .views import get_last_10_messages, get_user_contact, get_current_chat
+from django.contrib.auth import get_user_model
+from channels.consumer import AsyncConsumer
+from channels.db import database_sync_to_async
 
-User = get_user_model()
+from .models import Thread, ChatMessage
 
-
-class ChatConsumer(WebsocketConsumer):
-
-    def fetch_messages(self, data):
-        messages = get_last_10_messages(data['chatId'])
-        content = {
-            'command': 'messages',
-            'messages': self.messages_to_json(messages)
-        }
-        self.send_message(content)
-
-    def new_message(self, data):
-        user_contact = get_user_contact(data['from'])
-        message = Message.objects.create(
-            contact=user_contact,
-            content=data['message'])
-        current_chat = get_current_chat(data['chatId'])
-        current_chat.messages.add(message)
-        current_chat.save()
-        content = {
-            'command': 'new_message',
-            'message': self.message_to_json(message)
-        }
-        return self.send_chat_message(content)
-
-    def messages_to_json(self, messages):
-        result = []
-        for message in messages:
-            result.append(self.message_to_json(message))
-        return result
-
-    def message_to_json(self, message):
-        return {
-            'id': message.id,
-            'author': message.contact.user.username,
-            'content': message.content,
-            'timestamp': str(message.timestamp)
-        }
-
-    commands = {
-        'fetch_messages': fetch_messages,
-        'new_message': new_message
-    }
-
-    def connect(self):
-        self.room_name = self.scope['url_route']['kwargs']['room_name']
-        self.room_group_name = 'chat_%s' % self.room_name
-        async_to_sync(self.channel_layer.group_add)(
-            self.room_group_name,
+class ChatConsumer(AsyncConsumer):
+    async def websocket_connect(self, event):
+        print("connected", event)
+    
+        other_user = self.scope['url_route']['kwargs']['username']
+        user = self.scope['user']
+        #print(other_user,me)
+        thread_obj = await self.get_thread(user, other_user)
+        self.thread_obj=thread_obj
+        print(user,thread_obj.id)
+        chat_room = f"thread_{thread_obj.id}"
+        self.chat_room=chat_room
+        await self.channel_layer.group_add(
+            chat_room,
             self.channel_name
         )
-        self.accept()
-
-    def disconnect(self, close_code):
-        async_to_sync(self.channel_layer.group_discard)(
-            self.room_group_name,
-            self.channel_name
-        )
-
-    def receive(self, text_data):
-        data = json.loads(text_data)
-        self.commands[data['command']](self, data)
-
-    def send_chat_message(self, message):
-        async_to_sync(self.channel_layer.group_send)(
-            self.room_group_name,
-            {
-                'type': 'chat_message',
-                'message': message
+        await self.send({
+            "type":"websocket.accept"
+        })
+        #await asyncio.sleep(10)
+        
+    async def websocket_receive(self, event):
+        print("receive", event)
+        front_text = event.get('text, None')
+        if front_text is not None:
+            loaded_dict_data = json.loads(front_text)
+            msg = loaded_dict_data.get('message')
+            user=self.scope['user']
+            username='default'
+            if user.is_authenticated:
+                username = user.username
+            myResponse={
+                'message':msg,
+                'username':username
             }
-        )
+            async_to_sync(self.channel_layer.group_send(
+                self.chat_room,
+                {
+                    "type": "chat_message",
+                    "text": json.dumps(myResponse)
+                }
+            ))
 
-    def send_message(self, message):
-        self.send(text_data=json.dumps(message))
-
-    def chat_message(self, event):
-        message = event['message']
-        self.send(text_data=json.dumps(message))
+    async def chat_message(self,event):
+        print('message',event)
+        await self.send({
+            "type": "websocket.send",
+            "text" : event['text']
+        })            
+    async def websocket_disconnect(self, event):
+        print("disconnected", event)   
+    @database_sync_to_async
+    def get_thread(self,user,other_username):
+        return Thread.objects.get_or_new(user, other_username)[0]
+    @database_sync_to_async
+    def create_chat_message(self,user,msg):
+        return ChatMessage.objects.create(thread=thread_obj, user=user,message= msg) 

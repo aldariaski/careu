@@ -20,6 +20,12 @@ pylint:
   allow_failure: true
   coverage: '/^TOTAL.+?(\d+\%)$/'
 
+migrate:
+  stage: test
+  script:
+    - python manage.py makemigrations
+    - python manage.py migrate
+
 unit-test: 
   stage: test
   script:  
@@ -30,8 +36,10 @@ coverage:
   stage: test
   script:
     - python -m pip install coverage
-    - coverage run --include='careu/*' manage.py test
+    - coverage run manage.py test
     - coverage report -m
+
+
 
 Deployment:
   image: ruby:2.4

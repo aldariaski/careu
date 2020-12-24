@@ -15,7 +15,7 @@ from .models import Post, Profile
 #User view
 def register_view(request):
     if request.user.is_authenticated:
-        return redirect("")
+        return redirect('/')
 
     context = {
         "register_form" : RegistrationForm
@@ -45,7 +45,7 @@ def register_view(request):
 def logout_view(request):
     if request.user.is_authenticated:
         logout(request)
-    return redirect("")
+    return redirect('/')
 
 def login_view(request):
     context = {
@@ -53,14 +53,13 @@ def login_view(request):
     }
 
     if request.user.is_authenticated:
-        return redirect("")
+        return redirect('/')
 
     if request.method == "POST":
         login_form = LoginForm(data = request.POST)
         if login_form.is_valid():
             user = login_form.get_user()
             login(request, user)
-            print(user.username)
             return redirect("profile_view",username=user.username)
         elif login_form.errors:
             context["error"] = "Invalid Username or Password."
@@ -102,7 +101,3 @@ class PostCreateView(CreateView): # pylint: disable=too-many-ancestors
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
-
-def about(request):
-    '''method docstring here'''
-    return render(request, 'blog/about.html', {'title': 'About'})

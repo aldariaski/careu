@@ -19,6 +19,7 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 PRODUCTION = os.environ.get('DATABASE_URL') != None
+# PRODUCTION = os.environ.get('DATABASE_URL') == None
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -57,6 +58,16 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'care.urls'
+ASGI_APPLICATION = 'cfehome.asgi.application' 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
+
 
 TEMPLATES = [
     {
@@ -87,8 +98,8 @@ DATABASES = {
     }
 }
 
-if PRODUCTION:
-    DATABASES['default'] = dj_database_url.config()
+# if PRODUCTION:
+    # DATABASES['default'] = dj_database_url.config()
 
 
 # Password validation
