@@ -1,9 +1,11 @@
+'''module forms'''
 from django import forms
 
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 
 class RegistrationForm(UserCreationForm):
+    '''form registrasi dengan 3 fields'''
     username = forms.CharField(required=True,label="Username", widget=forms.TextInput(attrs={
         "class" : "form-control mb-4",
         "placeholder" : "Username"
@@ -21,11 +23,13 @@ class RegistrationForm(UserCreationForm):
         "type" : "password"
     }))
 
-    class Meta:
+    class Meta:# pylint: disable=too-few-public-methods
+        '''meta'''
         model = User
         fields = ["username", "password1", "password2"]
 
 class LoginForm(AuthenticationForm):
+    '''login form 2 fields'''
     username = forms.CharField(required = True, label="Username", widget=forms.TextInput(attrs={
         "class" : "form-control mb-3",
         "placeholder" : "Username"
@@ -37,9 +41,7 @@ class LoginForm(AuthenticationForm):
         "type" : "password"
     }))
 
-    class Meta:
+    class Meta:# pylint: disable=too-few-public-methods
+        '''meta'''
         model = User
         fields = ["username", "password"]
-
-
-

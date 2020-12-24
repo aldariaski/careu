@@ -1,5 +1,5 @@
 '''module for object in home'''
-class BadMentalHealth:
+class BadMentalHealth:# pylint: disable=too-few-public-methods
     '''Class Model for symptoms'''
     def __init__(self, name, desc, image, symptom, desctom): # pylint: disable=too-many-arguments
         self.name = name
@@ -23,7 +23,7 @@ class Symptoms: # pylint: disable=too-few-public-methods
     stress_name1 = 'Headaches'
 
     stress_desc1 = 'Other common headache triggers include lack of sleep, alcohol consumption and dehydration.' # pylint: disable=line-too-long
-class CareUTeam:
+class CareUTeam:# pylint: disable=too-few-public-methods
     '''object team careu'''
     def __init__(self, name, npm, url, image):
         self.name = name

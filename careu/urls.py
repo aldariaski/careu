@@ -1,7 +1,7 @@
+'''urls module'''
 from django.urls import path
 from . import home_view, views
 from .views import (
-    PostListView,
     PostDetailView,
     PostCreateView
 )

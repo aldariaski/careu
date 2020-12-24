@@ -1,17 +1,12 @@
-# from django.test import TestCase
-
-# Create your tests here.
-
-from django.contrib.auth.models import AnonymousUser, User
-from django.test import RequestFactory, TestCase, LiveServerTestCase, tag, Client
-from django.urls import reverse
+'''module to test'''
 from http import HTTPStatus
-from .forms import RegistrationForm
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.models import AnonymousUser, User
+from django.test import RequestFactory, TestCase
+from django.urls import reverse
 from .models import Profile
 
-class UserTest(TestCase):
+class UserTestAndOtherView(TestCase):
+    '''user test case dan beberapa view'''
     def setUp(self):
         # Every test needs access to the request factory.
         self.factory = RequestFactory()
@@ -38,7 +33,7 @@ class UserTest(TestCase):
         }
 
     def test_details(self):
-        # Create an instance of a GET request.
+        ''' Create an instance of a GET request.'''
         request = self.factory.get('')
 
         # Recall that middleware are not supported. You can simulate a
@@ -59,9 +54,6 @@ class UserTest(TestCase):
         response = self.client.get(reverse('journal-base'))
         self.assertEqual(response.status_code, 200)
 
-        #response = self.client.get(reverse('logout_view'))
-        #self.assertEqual(response.status_code, 200)
-
         response = self.client.get(reverse('chat-base'))
         self.assertEqual(response.status_code, 200)
 
@@ -69,6 +61,7 @@ class UserTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_register(self):
+        '''test register user'''
         data = {
             'username':'jacob',
             'password1':'top_secret'
@@ -83,7 +76,7 @@ class UserTest(TestCase):
 
         # register
         self.client.post(self.register_url,data = self.user)
-        counting = Profile.objects.all().count()
+        counting = Profile.objects.all().count() # pylint: disable=no-member
         self.assertEqual(counting,1)
 
         # check current state berhasil melakukan otentikasi dari user yang baru di daftarkan
@@ -92,12 +85,13 @@ class UserTest(TestCase):
 
 
     def test_login(self):
+        '''test untuk login'''
         response = self.client.get(self.login_url)
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
         response = self.client.post(self.register_url,data = self.user)
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        counting = Profile.objects.all().count()
+        counting = Profile.objects.all().count()# pylint: disable=no-member
         self.assertEqual(counting,1)
 
         response = self.client.get(self.login_url)
@@ -112,41 +106,40 @@ class UserTest(TestCase):
         response = self.client.post(self.login_url, {'aneh':'aneh'})
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
-        # user = User.objects.get(username='jacob')
-        # self.assertTrue(self.user.is_authenticated)
-
     def test_logout(self):
+        '''test untuk logout'''
         response = self.client.get(self.logout_url)
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        
+
         response = self.client.post(self.register_url, data = self.user)
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
 
         response = self.client.get(self.logout_url)
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-    
+
     def test_profile(self):
+        '''test bisa lihat profile'''
         response = self.client.post(self.register_url,data = self.user)
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
 
-        counting = Profile.objects.all().count()
+        counting = Profile.objects.all().count() # pylint: disable=no-member
         self.assertEqual(counting,1)
 
         response = self.client.get('/profile/jacob/')
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_post_view(self):
+        '''test post view'''
         response = self.client.get('/post/')
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_create_post(self):
+        '''test create post'''
         response = self.client.post(self.register_url,data = self.user)
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
 
-        counting = Profile.objects.all().count()
+        counting = Profile.objects.all().count() # pylint: disable=no-member
         self.assertEqual(counting,1)
 
         response = self.client.post('/post/new/',data = {'title':'mantap', 'content': 'iya mantap'})
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-
-        # coverage run manage.py test
