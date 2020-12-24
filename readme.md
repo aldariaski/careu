@@ -1,4 +1,4 @@
-[![pipeline status](https://gitlab.com/fauziridwan1709/careu/badges/master/pipeline.svg)](https://gitlab.com/fauziridwan1709/careu/-/commits/master)  [![coverage report](https://gitlab.com/fauziridwan1709/careu/badges/master/coverage.svg)](https://gitlab.com/fauziridwan1709/careu/-/commits/master)
+[![pipeline status](https://gitlab.com/aldariaski/careu-2/badges/master/pipeline.svg)](https://gitlab.com/aldariaski/careu-2/-/commits/master) [![coverage report](https://gitlab.com/aldariaski/careu-2/badges/master/coverage.svg)](https://gitlab.com/aldariaski/careu-2/-/commits/master)
 
 Anggota Kelompok
 
