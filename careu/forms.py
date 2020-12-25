@@ -7,18 +7,18 @@ from django.contrib.auth.models import User
 class RegistrationForm(UserCreationForm):
     '''form registrasi dengan 3 fields'''
     username = forms.CharField(required=True,label="Username", widget=forms.TextInput(attrs={
-        "class" : "form-control mb-4",
+        "class" : "form-control",
         "placeholder" : "Username"
     }))
 
     password1 = forms.CharField(label="Password", widget=forms.TextInput(attrs={
-        "class" : "form-control mb-1",
+        "class" : "form-control",
         "placeholder" : "Password",
         "type" : "password"
     }))
 
     password2 = forms.CharField(label="Konfirmasi password", widget=forms.TextInput(attrs={
-        "class" : "form-control mb-2",
+        "class" : "form-control",
         "placeholder" : "Konfirmasi password",
         "type" : "password"
     }))
@@ -31,12 +31,13 @@ class RegistrationForm(UserCreationForm):
 class LoginForm(AuthenticationForm):
     '''login form 2 fields'''
     username = forms.CharField(required = True, label="Username", widget=forms.TextInput(attrs={
-        "class" : "form-control mb-3",
-        "placeholder" : "Username"
+        "class" : "form-control",
+        "placeholder" : "Username",
+        "type": "text"
     }))
 
     password = forms.CharField(label="Password", widget=forms.TextInput(attrs={
-        "class" : "form-control mb-3",
+        "class" : "form-control",
         "placeholder" : "Password",
         "type" : "password"
     }))

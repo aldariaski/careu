@@ -13,7 +13,7 @@
 
     <!-- materialized form -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/css/materialize.min.css" integrity="sha256-qj3p6P1fJIV+Ndv7RW1ovZI2UhOuboj9GcODzcNFIN8=" crossorigin="anonymous" />
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/css/materialize.min.css" integrity="sha256-qj3p6P1fJIV+Ndv7RW1ovZI2UhOuboj9GcODzcNFIN8=" crossorigin="anonymous" /> -->
 
 
     <!-- Bootstrap CSS -->
@@ -43,9 +43,9 @@
 
 <body>
 
-    <header style="background-color: white;" class="site-header fixed-top">
-        <nav style="background-color: white;align-items: center;" class="navbar navbar-expand-sm fixed-top">
-            <div style="align-items: center;" class="container fixed-top">
+    <header style="background-color: white;color: #fff;" class="site-header fixed-top">
+        <nav style="align-items: center;box-shadow: 0px 5px 10px #00000024;" class="navbar navbar-expand-sm fixed-top bg-light">
+            <div style="align-items: center;" class="container">
                 <a class="navbar-brand mr-4" href="{% url 'home-base' %}">CareU.</a>
                 <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="true" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon icon-bar" ></span>
@@ -70,7 +70,7 @@
     <div class="koko">
         {% block content %}{% endblock %}
     </div>
-
+    <script type="text/javascript" src="{% static 'careu/login.js' %}"></script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -85,7 +85,7 @@
     </a>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/js/materialize.min.js" integrity="sha256-SrBfGi+Zp2LhAvy9M1bWOCXztRU9Ztztxmu5BcYPcPE=" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/js/materialize.min.js" integrity="sha256-SrBfGi+Zp2LhAvy9M1bWOCXztRU9Ztztxmu5BcYPcPE=" crossorigin="anonymous"></script> -->
 
     <script>
         function myFunction(param1, param2, param3, param4) {

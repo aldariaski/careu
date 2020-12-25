@@ -7,17 +7,29 @@
                 <img class="image1" src="{% static 'careu/asset.png' %}" />
                 <div dir="ltr" class="info">
                     <h1>Making Your <br>World Better!</h1><br>
-                    <h2>Register</h2>
                     <br>
 
                     <div id="container" class="text-light">
                         {% if error %}
                         <p class="text-center p-2 bg-danger rounded-lg">{{error}}</p>
                         {% endif %}
-                        <form method="POST" action="{% url 'register_view' %}" class="login-form bg-dark rounded-lg d-flex flex-column justify-content-center p-4">
-                            <h3 class="text-center mb-3 text-light">Register Now!</h3>
-                            {% csrf_token %} {{register_form}}
-                            <button type="submit" id="btn_register" class="btn btn-secondary">Register</button>
+                        <form style="border-radius: 10px;z-index: 4;box-shadow: 10px 10px 10px #00000024;" method="POST" action="{% url 'register_view' %}" class="login-form bg-dark rounded-lg d-flex flex-column justify-content-center p-4">
+                            <h3 style="font-weight: bold;" class="text-center mb-3 text-light">Register Now!</h3>
+                            {% csrf_token %} 
+                            {% for field in register_form %}
+                            <div class="form-group {% if field.errors %}has-error{% endif %}" id="group_{{ field.name }}">
+                                <label for="id_{{ field.name }}" class="control-label">{{ field.label }}</label>
+                                <div style="display: flex;position: relative;" class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1"><i class="fa {% if field.label == 'Password' or field.label == 'Konfirmasi password'  %} fa-lock {% else %} fa-user {% endif %}"></i></span>
+                                    </div>
+                                    {{ field }}
+                                </div>
+                            </div>
+                            {% endfor %}
+                            <button type="submit" id="btn_register" class="btn btn-warning">Register</button>
+                            <br>
+                            <p style="font-size: 12px;text-align: center;">Already have an account? <a class="text-warning" href="{% url 'login_view' %}"> Login here</a></p>
                         </form>
 
                     </div>

@@ -1,3 +1,4 @@
+@import url(font-awesome.min.css);
 .flex{
     display: flex;
     align-items: center;
@@ -420,3 +421,6 @@ button {
   button:hover .button-text {
     color: #fff;
   }
+
+
+  

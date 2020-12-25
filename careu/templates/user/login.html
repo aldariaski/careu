@@ -6,19 +6,33 @@
             <div dir="rtl" class="flex">
                 <img class="image1" src="{% static 'careu/asset.png' %}" />
                 <div dir="ltr" class="info">
-                    <h1>Making Your <br>World Better!</h1><br>
-                    <h2>Login</h2>
+                    <h1 class="heading">Making Your <br>World Better!</h1><br>
+                    <!-- <h2>Login</h2> -->
                     <br>
 
                     <div id="container" class="text-light">
-                        <form method="POST" action="{% url 'login_view' %}" class="login-form bg-dark rounded-lg d-flex flex-column justify-content-center p-4">
+                        <form style="border-radius: 10px;z-index: 4;box-shadow: 10px 10px 10px #00000024;" method="POST" action="{% url 'login_view' %}" class="login-form bg-dark rounded-lg d-flex flex-column justify-content-center p-4">
+                            
+                            <h3 style="font-weight: bold;" class="mb-3 text-center text-light">Login here!</h3>
+                            <br>
+                            {% csrf_token %} 
+                            {% for field in login_form %}
+                            <div class="form-group {% if field.errors %}has-error{% endif %}" id="group_{{ field.name }}">
+                                <label for="id_{{ field.name }}" class="control-label">{{ field.label }}</label>
+                                <div style="display: flex;position: relative;" class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1"><i class="fa {% if field.label == 'Password'  %} fa-lock {% else %} fa-user {% endif %}"></i></span>
+                                    </div>
+                                    {{ field }}
+                                </div>
+                            </div>
+                            {% endfor %}
                             {% if error %}
-                            <p class="text-center p-2 bg-danger rounded-lg">{{error}}</p>
+                            <p style="font-size: 12px;" class="text-center text-danger">{{error}}</p>
                             {% endif %}
-                            <h3 class="mb-3 text-center text-light">Login here!</h3>
-                            {% csrf_token %} {{login_form}}
-                            <button id="btn_login" type="submit" class="btn btn-secondary mb-3">Login</button>
-                            <p>Don't have an account? <a href="{% url 'register_view' %}">Register here</a></p>
+                            <!-- {{login_form}} -->
+                            <button id="btn_login" type="submit" class="btn btn-warning mb-3">Login</button>
+                            <p style="font-size: 12px;text-align: center;">Don't have an account? <a class="text-warning" href="{% url 'register_view' %}"> Register here</a></p>
                         </form>
 
                     </div>
