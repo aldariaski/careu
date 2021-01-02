@@ -20,11 +20,12 @@ pylint:
   allow_failure: true
   coverage: '/^TOTAL.+?(\d+\%)$/'
 
-migrate:
-  stage: test
-  script:
-    - python manage.py makemigrations
-    - python manage.py migrate
+#migrate:
+#  stage: test
+#  script:
+#    - python manage.py makemigrations
+#    - python manage.py migrate
+#
 
 unit-test: 
   stage: test
@@ -50,7 +51,7 @@ Deployment:
   script:
     - dpl --provider=heroku --app=$HEROKU_APPNAME --api-key=$HEROKU_APIKEY
     - export HEROKU_API_KEY=$HEROKU_APIKEY
-    - heroku run --app $HEROKU_APPNAME python manage.py makemigrations
+    #- heroku run --app $HEROKU_APPNAME python manage.py makemigrations
     - heroku run --app $HEROKU_APPNAME python manage.py migrate
   environment:
     name: production
