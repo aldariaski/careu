@@ -36,7 +36,6 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'careu.apps.CareuConfig',
-    'chat.apps.ChatConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',

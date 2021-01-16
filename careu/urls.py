@@ -13,6 +13,8 @@ urlpatterns = [
     path('', home_view.home, name='home-base'),
     path("login/", views.login_view, name = "login_view"),
     path("register/", views.register_view, name = "register_view"),
+    path("validate_username/", views.validate_username, name = "validate_username"),
+    path("validate_password/", views.validate_password, name = "validate_password"),
     path("logout/", views.logout_view, name = "logout_view"),
     path("profile/<str:username>/", views.profile_view, name = "profile_view"),
 
@@ -21,6 +23,7 @@ urlpatterns = [
     path('chat/', home_view.chat, name='chat-base'),
 
     path('post/', views.home, name = 'journal-home'),
+    path('post/getAllPosts/', views.get_all_post, name = 'get_all_post'),
     path('post/<int:pk>/', PostDetailView.as_view(), name = 'journal-detail'),
     path('post/new/', PostCreateView.as_view(), name = 'journal-create'),
 ]

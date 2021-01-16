@@ -1,4 +1,4 @@
-{% load static %} {% url 'home-base' as home %} {% url 'team-base' as team %} {% url 'journal-home' as journal %} {% url 'chat-base' as chat %} {% url 'login_view' as login %} {% url 'logout_view' as logout %}
+{% load static %} {% url 'home-base' as home %} {% url 'team-base' as team %} {% url 'journal-home' as journal %} {% url 'login_view' as login %} {% url 'logout_view' as logout %}
 
 
 
@@ -55,7 +55,7 @@
                         <a class="nav-item nav-link {% if request.path == home %} active {% endif %}" href="{{ home }}">Home</a>
                         <a class="nav-item nav-link {% if request.path == team %} active {% endif %}" href="{{ team }}">Our Team</a>
                         <a class="nav-item nav-link {% if request.path == journal %} active {% endif %}" href="{{ journal }}">My Journal</a>
-                        <a class="nav-item nav-link {% if request.path == chat %} active {% endif %}" href="{{ chat }}">Chat Us</a>
+                    
                     </div>
                     <div class="navbar-nav mr">
                         {% if not request.user.is_authenticated %}
@@ -84,10 +84,94 @@
         <i class="fa fa-arrow-down float-icon"></i>
     </a>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/js/materialize.min.js" integrity="sha256-SrBfGi+Zp2LhAvy9M1bWOCXztRU9Ztztxmu5BcYPcPE=" crossorigin="anonymous"></script> -->
-
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
+        $("#username_id").on("keyup", function() {
+            console.log("mantap");
+        var value = $(this).val().toLowerCase();
+        $.ajax({
+            type:"GET",
+            url: "{% url 'validate_username' %}",
+            dataType : 'json',
+            data: {
+                            'username': value
+                        },
+            success:function(response)
+            {   
+                if(response.length > 7) {
+                    console.log(response)
+                    $('#error_msg').css('font-size', '10px')
+                    if (response.is_exist) {
+                        $('#error_msg').html(response.error_message)
+                        $('#error_msg').css('display', 'flex')
+                        $('#error_msg').css('color', 'red')
+                        $('#error_msg').css('font-size', '10px')
+                        $('#btn_register').attr('disabled', true);
+                    } else {
+                        $('#error_msg').html(response.error_message)
+                        $('#error_msg').css('display', 'flex')
+                        $('#error_msg').css('color', 'green')
+                        $('#btn_register').attr('disabled', false);
+                        
+                    }
+                } else {
+                    $('#error_msg').html(response.error_message)
+                    $('#error_msg').css('display', 'flex')
+                    $('#error_msg').css('color', 'red')
+                    $('#error_msg').css('font-size', '10px')
+                    $('#btn_register').attr('disabled', true);
+                }
+                
+
+                console.log(response.is_exist);
+            }
+        });
+      });
+    
+      $("#password2").on("keyup", function() {
+        var value1 = $("#password1").val().toLowerCase();
+        var value2 = $(this).val().toLowerCase();
+        $.ajax({
+            type:"GET",
+            url: "{% url 'validate_password' %}",
+            dataType : 'json',
+            data: {
+                            'password1': value1,
+                            'password2': value2,
+                        },
+            success:function(response)
+            {   
+                if(response.length > 7) {
+                    console.log(response)
+                    $('#error_msg2').css('font-size', '10px')
+                    if (response.is_match) {
+                        $('#error_msg2').css('display', 'none')
+                        $('#btn_register').attr('disabled', false);
+                    } else {
+                        $('#error_msg2').html(response.error_message)
+                        $('#error_msg2').css('display', 'flex')
+                        $('#error_msg2').css('color', 'red')
+                        $('#error_msg2').css('font-size', '10px')
+                        $('#btn_register').attr('disabled', true);
+                    }
+                } else {
+                    $('#error_msg2').html(response.error_message)
+                    $('#error_msg2').css('display', 'flex')
+                    $('#error_msg2').css('color', 'red')
+                    $('#error_msg2').css('font-size', '10px')
+                    $('#btn_register').attr('disabled', true);
+                }
+                
+
+                console.log(response.is_exist);
+            }
+        });
+      });
+    
+    
+    </script>
+    <script>
+        
         function myFunction(param1, param2, param3, param4) {
 
             // var url = "/static/"+param2;

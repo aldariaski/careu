@@ -18,13 +18,13 @@ class UserTestAndOtherView(TestCase):
         User.objects.create_user(
             username='alreadyexist', password='top_secret')
         self.user = {
-            'username':'jacob',
+            'username':'jacob123',
             'password1':'top_secret',
             'password2':'top_secret'
         }
 
         self.login_user = {
-            'username': 'jacob',
+            'username': 'jacob123',
             'password': 'top_secret'
         }
 
@@ -125,7 +125,7 @@ class UserTestAndOtherView(TestCase):
         counting = Profile.objects.all().count() # pylint: disable=no-member
         self.assertEqual(counting,1)
 
-        response = self.client.get('/profile/jacob/')
+        response = self.client.get('/profile/jacob123/')
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_post_view(self):
@@ -143,3 +143,19 @@ class UserTestAndOtherView(TestCase):
 
         response = self.client.post('/post/new/',data = {'title':'mantap', 'content': 'iya mantap'})
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
+
+    def test_ajax_password(self):
+        '''test create post'''
+        response = self.client.get('/validate_password/?password1=asdasd&password2=asdasd')
+        self.assertEqual(response.status_code,HTTPStatus.OK)
+
+        response = self.client.get('/validate_password/?password1=asdasdas&password2=asdasdas')
+        self.assertEqual(response.status_code,HTTPStatus.OK)
+
+    def test_ajax_username(self):
+        '''test create post'''
+        response = self.client.get('/validate_username/?username=fauziridwan1709')
+        self.assertEqual(response.status_code,HTTPStatus.OK)
+
+        response = self.client.get('/validate_username/?username=fa12')
+        self.assertEqual(response.status_code,HTTPStatus.OK)

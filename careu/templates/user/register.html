@@ -1,20 +1,26 @@
 {% extends "base.html" %} {% load static %} {% block content %}
 
 <body>
+    
     <section class="gile fullscreen align-left">
         <div class="spotlight fullscreen align-left">
             <div dir="rtl" class="flex">
                 <img class="image1" src="{% static 'careu/asset.png' %}" />
                 <div dir="ltr" class="info">
-                    <h1>Making Your <br>World Better!</h1><br>
+                    <h1>Making Your <br>World Better! {{register_form.error_msg}}</h1><br>
                     <br>
 
                     <div id="container" class="text-light">
                         {% if error %}
-                        <p class="text-center p-2 bg-danger rounded-lg">{{error}}</p>
+                        {% for fields, errors in error.items %}
+                        {% for data in errors %}
+                        <p class="text-center p-2 bg-danger rounded-lg">{{data}}</p>
+                        {% endfor %}
+                        {% endfor %}
                         {% endif %}
                         <form style="border-radius: 10px;z-index: 4;box-shadow: 10px 10px 10px #00000024;" method="POST" action="{% url 'register_view' %}" class="login-form bg-dark rounded-lg d-flex flex-column justify-content-center p-4">
                             <h3 style="font-weight: bold;" class="text-center mb-3 text-light">Register Now!</h3>
+                            
                             {% csrf_token %} 
                             {% for field in register_form %}
                             <div class="form-group {% if field.errors %}has-error{% endif %}" id="group_{{ field.name }}">
@@ -24,7 +30,13 @@
                                         <span class="input-group-text" id="basic-addon1"><i class="fa {% if field.label == 'Password' or field.label == 'Konfirmasi password'  %} fa-lock {% else %} fa-user {% endif %}"></i></span>
                                     </div>
                                     {{ field }}
+                                    
                                 </div>
+                                {% if field.label == 'Username' %}
+                                    <h7 id="error_msg"></h7>
+                                {% elif field.label == 'Konfirmasi password' %}
+                                    <h7 id="error_msg2"></h7>
+                                {% endif %}
                             </div>
                             {% endfor %}
                             <button type="submit" id="btn_register" class="btn btn-warning">Register</button>

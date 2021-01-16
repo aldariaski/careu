@@ -7,6 +7,8 @@ from django.views.generic import (
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
+from django.core import serializers
+from django.http import JsonResponse, HttpResponse
 from .forms import RegistrationForm, LoginForm
 from .models import Post, Profile
 
@@ -36,9 +38,14 @@ def register_view(request):
 
             return redirect("profile_view",username=new_user.username)
         elif register_form.errors:
-            context["error"] = "Please enter valid a name and password."
+            context["error"] = register_form.errors
     return render(request, "user/register.html", context)
 
+def validate_username(request):
+    '''validate username input'''
+
+def validate_password(request):
+    '''validate password input'''
 
 def logout_view(request):
     '''logout logic'''
@@ -81,6 +88,13 @@ def home(request):
         'posts': Post.objects.all() # pylint: disable=no-member
     }
     return render(request, 'home.html', context)
+
+def get_all_post():
+    '''get all post'''
+    all_post = Post.objects.all() # pylint: disable=no-member
+    return HttpResponse(serializers.serialize('json', all_post),
+        content_type= "text/json-comment-filtered"
+)
 
 class PostListView(ListView): # pylint: disable=too-many-ancestors
     '''method docstring here'''
