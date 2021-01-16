@@ -114,7 +114,7 @@ def home(request):
     }
     return render(request, 'home.html', context)
 
-def get_all_post():
+def get_all_post(request): # pylint: disable=unused-argument
     '''get all post'''
     all_post = Post.objects.all() # pylint: disable=no-member
     return HttpResponse(serializers.serialize('json', all_post),

@@ -159,3 +159,8 @@ class UserTestAndOtherView(TestCase):
 
         response = self.client.get('/validate_username/?username=fa12')
         self.assertEqual(response.status_code,HTTPStatus.OK)
+
+    def test_json_in_post(self):
+        '''test get all post'''
+        response = self.client.get('/post/getAllPosts/')
+        self.assertEqual(response.status_code,HTTPStatus.OK)
