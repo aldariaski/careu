@@ -43,9 +43,34 @@ def register_view(request):
 
 def validate_username(request):
     '''validate username input'''
+    username = request.GET.get('username',None)
+    data = {
+		'is_exist': User.objects.filter(username__iexact=username).exists(),
+        'length': len(username)
+    }
+    if data['length'] < 8:
+        data['error_message'] = 'username too short, input atleast 8 Char'
+    elif data['is_exist']:
+        data['error_message'] = 'User with that username already exists'
+    else:
+        data['error_message'] = 'Username available'
+    return JsonResponse(data)
 
 def validate_password(request):
     '''validate password input'''
+    password1 = request.GET.get('password1',None)
+    password2 = request.GET.get('password2',None)
+    data = {
+		'is_match': password1 == password2,
+        'length': len(password1)
+    }
+    if data['length'] < 8:
+        data['error_message'] = 'password too short, input atleast 8 Char'
+    elif data['is_match']:
+        data['error_message'] = 'Password match'
+    else:
+        data['error_message'] = 'password do not match'
+    return JsonResponse(data)
 
 def logout_view(request):
     '''logout logic'''
